@@ -1,10 +1,11 @@
-'use client'
+"use client"
 
 import React, { useState, useRef, useEffect } from "react";
 import { Code, Cat, Guitar, BookOpen } from 'lucide-react';
 import { GiPickle } from "react-icons/gi";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import LumberjackGame from './LumberjackGame';
+import { motion } from 'framer-motion';
 
 export default function Interests() {
   const [showGame, setShowGame] = useState(false);
@@ -23,30 +24,40 @@ export default function Interests() {
     setTransforming(true);
     setTimeout(() => {
       setShowGame(true);
-      setTimeout(() => {
-        gameRef.current?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    }, 1000);
+      setTransforming(false);
+    }, 2000);
   };
 
   const handleCloseGame = () => {
     setShowGame(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   useEffect(() => {
-    if (!showGame) {
-      setTransforming(false);
+    if (showGame && gameRef.current) {
+      gameRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [showGame]);
 
   return (
     <section className="w-full bg-gray-800 py-20">
-      <div className="container mx-auto px-4">
+      <motion.div 
+        initial={{ y: -50, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="container mx-auto px-4"
+      >
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-green-400 text-center">My Interests</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
           {interests.map((interest, index) => (
-            <div key={index} className="flex flex-col items-center">
+            <motion.div 
+              key={index} 
+              initial={{ y: 50, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="flex flex-col items-center"
+            >
               <div
                 className={`bg-gray-700 p-6 rounded-full shadow-lg mb-4 ${
                   interest.name === 'Pickles' && transforming ? 'animate-transform' : ''
@@ -77,10 +88,10 @@ export default function Interests() {
                 </TooltipProvider>
               </div>
               <span className="text-lg font-semibold text-green-400">{interest.name}</span>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
       {showGame && (
         <div ref={gameRef} className="mt-20">
           <LumberjackGame onClose={handleCloseGame} />

@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,7 +25,12 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed w-full z-50 bg-background/80 backdrop-blur-sm border-b">
+    <motion.nav 
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="fixed w-full z-50 bg-background/80 backdrop-blur-sm border-b"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -66,12 +72,11 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      <div
-        className={`md:hidden transition-all duration-300 ease-in-out ${
-          isMenuOpen
-            ? 'opacity-100 translate-y-0'
-            : 'opacity-0 -translate-y-2 pointer-events-none'
-        }`}
+      <motion.div
+        initial={false}
+        animate={isMenuOpen ? { opacity: 1, height: "auto" } : { opacity: 0, height: 0 }}
+        transition={{ duration: 0.3 }}
+        className="md:hidden overflow-hidden"
       >
         <div className="px-2 pt-2 pb-3 space-y-1 bg-background/80 backdrop-blur-sm border-b">
           {menuItems.map((item) => (
@@ -85,8 +90,8 @@ const Navbar = () => {
             </Link>
           ))}
         </div>
-      </div>
-    </nav>
+      </motion.div>
+    </motion.nav>
   );
 };
 

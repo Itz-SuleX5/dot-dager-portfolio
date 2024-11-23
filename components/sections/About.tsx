@@ -1,10 +1,19 @@
+"use client"
+
 import { Check } from 'lucide-react'
+import { motion } from 'framer-motion';
 
 export default function About() {
   const interests = ['Programming', 'Cats', 'Guitars', 'Philosophy', 'Pickles']
 
   return (
-    <section className="w-full bg-background py-24">
+    <motion.section
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+      viewport={{ once: true }}
+      className="w-full bg-background py-24"
+    >
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold mb-8 text-green-400 text-center">About Me</h2>
         <div className="flex flex-col md:flex-row items-start justify-between space-y-8 md:space-y-0 md:space-x-24">
@@ -29,7 +38,6 @@ export default function About() {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }
-
