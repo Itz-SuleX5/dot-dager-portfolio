@@ -38,13 +38,13 @@ export default function LumberjackGame({ onClose }: LumberjackGameProps) {
     if (!gameOver && timeLeft > 0) {
       const timer = setInterval(() => {
         setTimeLeft((prev) => {
-          if (prev <= 0) {
+          const newTime = prev - (0.8 + difficulty * 0.2);
+          if (newTime <= 0) {
             setGameOver(true);
             setHighScore(current => Math.max(current, score));
             return 0;
           }
-          // Time decreases faster with higher difficulty
-          return prev - (0.8 + difficulty * 0.2);
+          return newTime;
         });
       }, 50);
 
