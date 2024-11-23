@@ -78,8 +78,8 @@ export default function LumberjackGame({ onClose }: LumberjackGameProps) {
         // Move existing branches down faster with higher difficulty
         const movedBranches = remainingBranches.map(branch => {
           const newPosition = branch.position + (12 + difficulty);
-          // If branch would go below 85%, remove it
-          if (newPosition > 85) {
+          // If branch would go below 70%, remove it
+          if (newPosition > 70) {
             return null;
           }
           return {
