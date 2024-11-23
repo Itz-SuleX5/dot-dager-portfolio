@@ -122,13 +122,14 @@ export default function LumberjackGame({ onClose }: LumberjackGameProps) {
 
   return (
     <div className="w-full h-screen bg-gradient-to-b from-sky-400 to-sky-200 flex flex-col items-center justify-center relative">
-      <button 
-        onClick={onClose}
-        className="absolute top-4 right-4 text-white hover:text-gray-300"
-        aria-label="Close game"
-      >
-        <X size={24} />
-      </button>
+      <div className="relative w-full max-w-lg mx-auto">
+        <button
+          onClick={onClose}
+          className="absolute -top-4 right-0 mt-24 mr-4 p-2 text-white hover:text-green-400 transition-colors"
+        >
+          <X size={24} />
+        </button>
+      </div>
       <h1 className="text-4xl text-white font-bold mb-6 drop-shadow-lg">Lumberjack</h1>
       <div className="flex flex-col items-center gap-4 mb-6">
         <div className="flex gap-8 items-center">
