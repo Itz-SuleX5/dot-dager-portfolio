@@ -24,7 +24,7 @@ export default function LumberjackGame({ onClose }: LumberjackGameProps) {
   function generateBranches(count: number): Branch[] {
     return Array.from({ length: count }, (_, index) => ({
       side: Math.random() > 0.5 ? 'left' : 'right',
-      position: index * 12,  
+      position: index * 10,  
       isNew: false
     }));
   }
@@ -75,28 +75,24 @@ export default function LumberjackGame({ onClose }: LumberjackGameProps) {
       setBranches(prev => {
         const remainingBranches = prev.filter(b => b !== lowestBranch);
         
-        // Move existing branches down faster with higher difficulty
-        const movedBranches = remainingBranches.map(branch => {
-          const newPosition = branch.position + (12 + difficulty);
-          // If branch would go below 70%, remove it
-          if (newPosition > 70) {
-            return null;
-          }
-          return {
-            ...branch,
-            position: newPosition,
-            isNew: false
-          };
-        }).filter(branch => branch !== null);
+        // Asignar posiciones fijas basadas en el índice
+        const movedBranches = remainingBranches.map((branch, index) => ({
+          ...branch,
+          position: (index + 1) * 10, // Cada rama estará separada por 10 unidades
+          isNew: false
+        }));
 
         // Add a new branch at the top
-        const newBranch: Branch = {
-          side: Math.random() > 0.5 ? 'left' : 'right',
-          position: 0,
-          isNew: true
-        };
+        const newBranches = [];
+        if (movedBranches.length < 7) {
+          newBranches.push({
+            side: Math.random() > 0.5 ? 'left' : 'right',
+            position: 0,
+            isNew: true
+          });
+        }
 
-        return [newBranch, ...movedBranches];
+        return [...newBranches, ...movedBranches];
       });
 
       setPosition(side);
