@@ -23,7 +23,7 @@ export default function LumberjackGame({ onClose }: LumberjackGameProps) {
 
   function generateBranches(count: number): Branch[] {
     return Array.from({ length: count }, (_, index) => ({
-      side: Math.random() > 0.5 ? 'left' : 'right',
+      side: Math.random() > 0.5 ? 'left' as const : 'right' as const,
       position: index * 10,  
       isNew: false
     }));
@@ -86,13 +86,13 @@ export default function LumberjackGame({ onClose }: LumberjackGameProps) {
         const newBranches = [];
         if (movedBranches.length < 7) {
           newBranches.push({
-            side: Math.random() > 0.5 ? 'left' : 'right',
+            side: Math.random() > 0.5 ? 'left' as const : 'right' as const,
             position: 0,
             isNew: true
           });
         }
 
-        return [...newBranches, ...movedBranches];
+        return [...newBranches, ...movedBranches] as Branch[];
       });
 
       setPosition(side);
